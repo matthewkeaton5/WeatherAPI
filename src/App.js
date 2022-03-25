@@ -11,7 +11,6 @@ const key = "89c243fef61e74e5f94ace3dfa882baa";
 class App extends React.Component{
     constructor() {
         super();
-        this.getCurrent = this.getCurrent.bind(this)
         this.state = {
             zip: undefined,
             city: undefined,
@@ -31,7 +30,6 @@ class App extends React.Component{
             //"http://api.weatherapi.com/v1/current.json?key="+ KEY + "&q="+ location +"&aqi=no"
             "https://api.openweathermap.org/data/2.5/weather?zip="+ this.state.zip + ",us&appid=" + key
         );
-
         const response = await api_call.json();
 
         console.log(response);
@@ -75,7 +73,10 @@ class App extends React.Component{
 
 
     }
-
+    handleSubmit(e){
+        e.preventDefault();
+        this.getCurrent();
+    }
 
     //onChange={event => this.setState({zip: event.target.value})}
 
@@ -84,10 +85,11 @@ class App extends React.Component{
         return (
             <div className="App">
                 <div className="container h-100">
-                    <form onChange={e => this.setState({zip: e.target.value})} >
+                    <form  >
                         <div className="row">
                             <div className="col-md-3 offset-md-2">
                                 <input
+                                    onChange={e => this.setState({zip: e.target.value})}
                                     type="text"
                                     className="form-control"
                                     placeholder="Zip code"
@@ -97,6 +99,7 @@ class App extends React.Component{
                             </div>
                             <div className="col-md-3">
                                 <input
+                                    onChange={e => this.setState({zip: e.target.value})}
                                     type="date"
                                     className="form-control"
                                     placeholder="Start date"
@@ -105,7 +108,7 @@ class App extends React.Component{
                                 />
                             </div>
                             <div className="col-md-3 mt-md-0 mt-2 text-md-left ">
-                                <button  onClick={() => this.getCurrent()} className="btn btn-warning">Get Weather</button>
+                                <button  onClick={e => this.handleSubmit(e)} className="btn btn-warning">Get Weather</button>
                             </div>
                         </div>
                     </form>
